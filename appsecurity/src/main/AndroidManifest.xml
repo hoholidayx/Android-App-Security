@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="hoholiday.app.lib.appsecurity">
+
+    <application>
+
+        <service
+            android:name=".service.SecAccessibilityService"
+            android:label="@string/accessibility_sec_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+        </service>
+
+    </application>
+
+
+</manifest>

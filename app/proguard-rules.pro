@@ -1,0 +1,1 @@
+-keep class hoholiday.app.lib.appsecurity.JNI {native <methods>;}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3">
+
+            <Button
+                android:id="@+id/btn_load_jni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加载JNI" />
+
+            <Button
+                android:id="@+id/btn_test_accessibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检测辅助功能" />
+
+            <Button
+                android:id="@+id/btn_test_emulator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检测模拟器" />
+        </GridLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
