@@ -10,8 +10,8 @@ android {
         targetSdkVersion 29
         versionCode 10000
         versionName "1.0.0"
-
-        consumerProguardFiles "consumer-rules.pro"
+        //被引用的时候可以自动配置混淆
+        consumerProguardFiles "consumer-rules.pro", "proguard-rules.pro"
         externalNativeBuild {
             cmake {
                 cppFlags ""
