@@ -11,6 +11,7 @@ import hoholiday.app.lib.appsecurity.checkunit.CheckUnitFactory;
 import hoholiday.app.lib.appsecurity.checkunit.CheckUnitName;
 import hoholiday.app.lib.appsecurity.checkunit.ICheckUnit;
 import hoholiday.app.lib.appsecurity.conf.Configuration;
+import hoholiday.app.lib.appsecurity.exception.AppSecurityException;
 
 public class AppSecurityManager {
 
@@ -47,7 +48,7 @@ public class AppSecurityManager {
         return suspiciousDegree;
     }
 
-    public void init(Context context) {
+    public void init(Context context) throws AppSecurityException {
         if (Configuration.isLogEnable()) {
             Log.i(Configuration.LOG_TAG, "App security manager init...");
         }

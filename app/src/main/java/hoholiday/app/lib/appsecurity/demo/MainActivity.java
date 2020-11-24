@@ -1,11 +1,13 @@
 package hoholiday.app.lib.appsecurity.demo;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import hoholiday.app.lib.appsecurity.AppSecurityManager;
 import hoholiday.app.lib.appsecurity.checkunit.CheckUnitName;
+import hoholiday.app.lib.appsecurity.exception.AppSecurityException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +16,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_load_jni).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().init(getApplicationContext());
+            try {
+                AppSecurityManager.getInstance().init(getApplicationContext());
+            } catch (AppSecurityException e) {
+                Toast.makeText(getApplicationContext(), String.format("App安全异常!%s", e), Toast.LENGTH_LONG).show();
+            }
         });
         findViewById(R.id.btn_test_accessibility).setOnClickListener(v -> {
             AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT);

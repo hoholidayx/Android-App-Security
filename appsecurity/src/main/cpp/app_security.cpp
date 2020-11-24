@@ -12,7 +12,7 @@ static JNIEnv *getCurrentJNIEnv() {
 
 static void throwJavaRuntimeException(JNIEnv *env, const char *message) {
     jclass exClass;
-    char *className = "java/lang/RuntimeException";
+    char *className = "hoholiday/app/lib/appsecurity/exception/AppSecurityException";
     exClass = env->FindClass(className);
     env->ThrowNew(exClass, message);
 }
@@ -141,7 +141,8 @@ void nativeInit(JNIEnv *env, jobject jobj) {
     if (signStr != appSignatureMd5) {
         int exitCode = -101;
         LOGE("[nativeInit] init failed!exit:%d", exitCode);
-        throwJavaRuntimeException(env, "安全校验失败");
+        std::string msg = "安全校验失败!code=" + to_string(exitCode);
+        throwJavaRuntimeException(env, msg.c_str());
     }
 }
 
