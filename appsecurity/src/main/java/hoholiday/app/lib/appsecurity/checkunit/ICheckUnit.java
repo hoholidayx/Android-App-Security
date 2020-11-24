@@ -1,10 +1,10 @@
-package hoholiday.app.lib.appsecurity;
+package hoholiday.app.lib.appsecurity.checkunit;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-interface ICheckUnit {
+public interface ICheckUnit {
 
     /**
      * 进行单元检测

@@ -7,13 +7,12 @@ import android.util.Log;
 import java.util.Arrays;
 import java.util.List;
 
+import hoholiday.app.lib.appsecurity.checkunit.CheckUnitFactory;
+import hoholiday.app.lib.appsecurity.checkunit.CheckUnitName;
+import hoholiday.app.lib.appsecurity.checkunit.ICheckUnit;
 import hoholiday.app.lib.appsecurity.conf.Configuration;
 
 public class AppSecurityManager {
-
-    public static final int ACCESSIBILITY_SERVICE_CHECK_UNIT = 0;
-
-    public static final int EMULATOR_CHECK_UNIT = 1;
 
     static {
         System.loadLibrary("app-security");
@@ -33,17 +32,10 @@ public class AppSecurityManager {
         return instance;
     }
 
-    public double unitCheck(Context context, int unit) {
-        ICheckUnit checkUnit = null;
-        switch (unit) {
-            case ACCESSIBILITY_SERVICE_CHECK_UNIT:
-                checkUnit = new AccessibilityServiceCheckUnit();
-                break;
-            case EMULATOR_CHECK_UNIT:
-                checkUnit = new EmulatorCheckUnit();
-                break;
-            default:
-                throw new IllegalArgumentException("check unit not found!");
+    public double unitCheck(Context context, @CheckUnitName String name) {
+        ICheckUnit checkUnit = CheckUnitFactory.getCheckUnit(name);
+        if (checkUnit == null) {
+            return 0;
         }
         if (Configuration.isLogEnable()) {
             Log.i(Configuration.LOG_TAG, String.format("Begin checking unit [%s] ... ", checkUnit));
@@ -59,14 +51,14 @@ public class AppSecurityManager {
         if (Configuration.isLogEnable()) {
             Log.i(Configuration.LOG_TAG, "App security manager init...");
         }
-        List<Integer> checkUnitList = Arrays.asList(
-                ACCESSIBILITY_SERVICE_CHECK_UNIT,
-                EMULATOR_CHECK_UNIT
+        List<String> checkUnitList = Arrays.asList(
+                CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT,
+                CheckUnitName.EMULATOR_CHECK_UNIT
         );
         final Context appContext = context.getApplicationContext();
         AsyncTask.execute(() -> {
             double suspiciousDegree = 0.;
-            for (Integer checkUnit : checkUnitList) {
+            for (String checkUnit : checkUnitList) {
                 double checkRet = unitCheck(appContext, checkUnit);
                 // TODO: 2020/11/19 加权
                 suspiciousDegree += checkRet;

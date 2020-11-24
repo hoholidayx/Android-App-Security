@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import hoholiday.app.lib.appsecurity.AppSecurityManager;
+import hoholiday.app.lib.appsecurity.checkunit.CheckUnitName;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
             AppSecurityManager.getInstance().init(getApplicationContext());
         });
         findViewById(R.id.btn_test_accessibility).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), AppSecurityManager.ACCESSIBILITY_SERVICE_CHECK_UNIT);
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT);
         });
         findViewById(R.id.btn_test_emulator).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), AppSecurityManager.EMULATOR_CHECK_UNIT);
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.EMULATOR_CHECK_UNIT);
         });
     }
 }

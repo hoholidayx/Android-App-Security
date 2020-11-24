@@ -107,12 +107,8 @@ const char *md5(const char *content) {
  */
 void nativeInit(JNIEnv *env, jobject jobj) {
     LOGI("[nativeInit]");
-    jobject appContext = getGlobalContext(env);
-    LOGI("[nativeInit] get applicationContext : %p", &appContext);
     //检查APP签名
-    const char *appSignatureChars = getAppSignature(env, appContext);
-    MD5 md5(appSignatureChars);
-    std::string appSignatureMd5 = md5.getDigest();
+    std::string appSignatureMd5 = std::string((char *) getAppSignatureMD5());
     LOGI("[nativeInit] get app signature : %s", appSignatureMd5.c_str());
     //6c08fe5d22aa9801fdd2168895afc35f,使用混淆:https://zerosum0x0.blogspot.com/2017/08/obfuscatedencrypted-cc-online-string.html
     unsigned char s[] = {
