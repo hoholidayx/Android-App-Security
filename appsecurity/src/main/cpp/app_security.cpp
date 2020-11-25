@@ -1,20 +1,41 @@
 #include "app_security.h"
+#include "utils/android_log.h"
 #include "utils/md5.h"
+#include "AntiDebug.h"
+
 
 static JavaVM *g_jvm;
 
+static AntiDebug *g_antiDebug;
+
 
 static JNIEnv *getCurrentJNIEnv() {
-    JNIEnv *env = NULL;
-    g_jvm->AttachCurrentThread(&env, NULL);
+    JNIEnv *env = nullptr;
+    g_jvm->AttachCurrentThread(&env, nullptr);
     return env;
 }
 
 static void throwJavaRuntimeException(JNIEnv *env, const char *message) {
-    jclass exClass;
-    char *className = "hoholiday/app/lib/appsecurity/exception/AppSecurityException";
-    exClass = env->FindClass(className);
-    env->ThrowNew(exClass, message);
+    LOGE("throw exception to java. %s", message);
+    //加载自定义异常类
+    jclass appSecurityExceptionClass = env->FindClass(
+            "hoholiday/app/lib/appsecurity/exception/AppSecurityException");
+    env->ThrowNew(appSecurityExceptionClass, message);
+    env->DeleteLocalRef(appSecurityExceptionClass);
+}
+
+static void javaRuntimeExit(int exitCode) {
+    JNIEnv *env = getCurrentJNIEnv();
+    jclass runtimeClass = env->FindClass("java/lang/Runtime");
+    jmethodID getRuntimeMethod = env->GetStaticMethodID(runtimeClass, "getRuntime",
+                                                        "()Ljava/lang/Runtime;");
+    jmethodID exitMethod = env->GetMethodID(runtimeClass, "exit", "(I)V");
+    jobject runtimeObj = env->CallStaticObjectMethod(runtimeClass, getRuntimeMethod);
+
+    env->DeleteLocalRef(runtimeClass);
+    //Runtime.getRuntime().exit(int);
+    env->CallVoidMethod(runtimeObj, exitMethod, exitCode);
+    env->DeleteLocalRef(runtimeObj);
 }
 
 
@@ -89,6 +110,25 @@ static const char *getAppSignature(JNIEnv *env, jobject appContext) {
     return appSignatureChars;
 }
 
+
+/**
+ * AntiDebug检测回调类
+ */
+class DetectDebugCallbackImpl : public DetectDebugCallback {
+
+    void onDetected(int result) override {
+        LOGE("NATIVE SO IS BEING TRACED!");
+        if (g_antiDebug != nullptr) {
+            g_antiDebug->stop();
+        }
+        int exitCode = EXIT_CODE_ANTI_DEBUG;
+        LOGE("安全校验失败!code=%d", exitCode);
+        //直接退出
+        javaRuntimeExit(exitCode);
+    }
+};
+
+
 const char *getAppSignatureMD5() {
     JNIEnv *env = getCurrentJNIEnv();
     jobject appContext = getGlobalContext(env);
@@ -139,11 +179,17 @@ void nativeInit(JNIEnv *env, jobject jobj) {
     }
     std::string signStr = std::string((char *) s);
     if (signStr != appSignatureMd5) {
-        int exitCode = -101;
+        int exitCode = EXIT_CODE_UNAUTH_SIGNATURE;
         LOGE("[nativeInit] init failed!exit:%d", exitCode);
         std::string msg = "安全校验失败!code=" + to_string(exitCode);
         throwJavaRuntimeException(env, msg.c_str());
     }
+
+    delete g_antiDebug;
+    //开始监听ptrace
+    g_antiDebug = new AntiDebug();
+    g_antiDebug->setDebugDetectiveCallback(new DetectDebugCallbackImpl());
+    g_antiDebug->start();
 }
 
 
@@ -175,5 +221,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 
 
 JNIEXPORT void JNI_OnUnload(JavaVM *vm, void *reserved) {
+    if (g_antiDebug != nullptr) {
+        g_antiDebug->stop();
+        delete g_antiDebug;
+    }
 
+    g_jvm = nullptr;
 }
