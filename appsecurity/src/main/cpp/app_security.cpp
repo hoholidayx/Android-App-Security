@@ -185,11 +185,17 @@ void nativeInit(JNIEnv *env, jobject jobj) {
         throwJavaRuntimeException(env, msg.c_str());
     }
 
-    delete g_antiDebug;
-    //开始监听ptrace
-    g_antiDebug = new AntiDebug();
-    g_antiDebug->setDebugDetectiveCallback(new DetectDebugCallbackImpl());
-    g_antiDebug->start();
+    if (ANTI_DEBUG_ENABLED) {
+        LOGD("Anti debug is enabled!");
+        //开启反调试
+        delete g_antiDebug;
+        //开始监听ptrace
+        g_antiDebug = new AntiDebug();
+        g_antiDebug->setDebugDetectiveCallback(new DetectDebugCallbackImpl());
+        g_antiDebug->start();
+    } else {
+        LOGD("Anti debug is disabled!");
+    }
 }
 
 
