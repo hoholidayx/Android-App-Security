@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import hoholiday.app.lib.appsecurity.conf.Configuration;
+import hoholiday.app.lib.appsecurity.utils.SystemUtils;
 
 /**
  * 模拟器检测
@@ -164,20 +165,6 @@ class EmulatorCheckUnit implements ICheckUnit {
         return "emulator";
     }
 
-    private static String getProperty(String propName) {
-        String value = null;
-        try {
-            Object roSecureObj = Class.forName("android.os.SystemProperties")
-                    .getMethod("get", String.class)
-                    .invoke(null, propName);
-            if (roSecureObj != null) {
-                value = (String) roSecureObj;
-            }
-        } catch (Exception e) {
-            value = null;
-        }
-        return value;
-    }
 
     /**
      * 特征参数-硬件名称
@@ -185,7 +172,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkHardware() {
-        String hardware = getProperty("ro.hardware");
+        String hardware = SystemUtils.getSystemProperty("ro.hardware");
         if (TextUtils.isEmpty(hardware)) {
             return CHECK_RESULT_FAILED;
         }
@@ -211,7 +198,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkFlavor() {
-        String flavor = getProperty("ro.build.flavor");
+        String flavor = SystemUtils.getSystemProperty("ro.build.flavor");
         if (TextUtils.isEmpty(flavor)) {
             return CHECK_RESULT_FAILED;
         }
@@ -230,7 +217,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkManufacturer() {
-        String manufacturer = getProperty("ro.product.manufacturer");
+        String manufacturer = SystemUtils.getSystemProperty("ro.product.manufacturer");
         if (TextUtils.isEmpty(manufacturer)) {
             return CHECK_RESULT_FAILED;
         }
@@ -249,7 +236,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkModel() {
-        String model = getProperty("ro.product.model");
+        String model = SystemUtils.getSystemProperty("ro.product.model");
         if (TextUtils.isEmpty(model)) {
             return CHECK_RESULT_FAILED;
         }
@@ -269,7 +256,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkBoard() {
-        String board = getProperty("ro.product.board");
+        String board = SystemUtils.getSystemProperty("ro.product.board");
         if (TextUtils.isEmpty(board)) {
             return CHECK_RESULT_FAILED;
         }
@@ -288,7 +275,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkPlatform() {
-        String platform = getProperty("ro.board.platform");
+        String platform = SystemUtils.getSystemProperty("ro.board.platform");
         if (TextUtils.isEmpty(platform)) {
             return CHECK_RESULT_FAILED;
         }
@@ -306,7 +293,7 @@ class EmulatorCheckUnit implements ICheckUnit {
      * @return {@link #CHECK_RESULT_FAILED:失败，{@link #CHECK_RESULT_NORMAL：真机，{@link #CHECK_RESULT_EMULATOR}：模拟器
      */
     private int checkBaseBand() {
-        String baseBandVersion = getProperty("gsm.version.baseband");
+        String baseBandVersion = SystemUtils.getSystemProperty("gsm.version.baseband");
         int result = CHECK_RESULT_NORMAL;
         String baseBandLowercase = baseBandVersion.toLowerCase();
         if (baseBandLowercase.contains("1.0.0.0")) {

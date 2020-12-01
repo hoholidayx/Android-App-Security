@@ -18,6 +18,8 @@ public class CheckUnitFactory {
             case CheckUnitName.EMULATOR_CHECK_UNIT:
                 checkUnit = new EmulatorCheckUnit();
                 break;
+            case CheckUnitName.ROOT_CHECK_UNIT:
+                checkUnit = new RootCheckUnit();
             default:
                 if (Configuration.isLogEnable()) {
                     Log.e(Configuration.LOG_TAG, String.format("check [%s] unit not found!", name));
