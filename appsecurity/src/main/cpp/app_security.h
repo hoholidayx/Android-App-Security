@@ -10,9 +10,9 @@
 #define APP_DEBUG false
 
 /**
- * 是否开启反调试开关，开发阶段默认关闭
+ * 是否开启反调试开关
  */
-#define ANTI_DEBUG_ENABLED !APP_DEBUG
+#define ANTI_DEBUG_ENABLED true
 
 
 /**

@@ -151,66 +151,34 @@ void nativeInit(JNIEnv *env, jobject jobj) {
     std::string appSignatureMd5 = std::string((char *) getAppSignatureMD5());
     LOGI("[nativeInit] get app signature : %s", appSignatureMd5.c_str());
 
-    std::string signStr;
-    if (APP_DEBUG) {
-        //6c08fe5d22aa9801fdd2168895afc35f,使用混淆:https://zerosum0x0.blogspot.com/2017/08/obfuscatedencrypted-cc-online-string.html
-        unsigned char s[] = {
-                0xdf, 0x41, 0xcf, 0x39, 0x37, 0x8e, 0x3, 0x92,
-                0x4f, 0x6d, 0xb8, 0x4, 0x5b, 0x65, 0xd4, 0xe6,
-                0xc1, 0xf7, 0xe1, 0x2b, 0x2d, 0x27, 0x86, 0x60,
-                0xb6, 0x88, 0x9b, 0x61, 0x35, 0x8, 0x22, 0xba,
-                0x7a};
+    //075aa687f44a253d6abb9994d466c487,使用混淆:https://zerosum0x0.blogspot.com/2017/08/obfuscatedencrypted-cc-online-string.html
+    unsigned char s[] = {
+            0x1f, 0x1d, 0x15, 0x79, 0x75, 0x7, 0x37, 0x5,
+            0x5b, 0xf2, 0xee, 0x59, 0xf2, 0xec, 0x11, 0x3b,
+            0xda, 0x41, 0x3b, 0x37, 0x5, 0x1, 0x0, 0xba,
+            0x17, 0xb2, 0xb2, 0xae, 0x39, 0xa2, 0xd6, 0xa8,
+            0xbe};
 
-        for (unsigned int m = 0; m < sizeof(s); ++m) {
-            unsigned char c = s[m];
-            c = ~c;
-            c ^= m;
-            c += 0xe5;
-            c ^= m;
-            c -= 0x66;
-            c = (c >> 0x3) | (c << 0x5);
-            c += m;
-            c ^= 0x1b;
-            c -= m;
-            c ^= 0x2b;
-            c = -c;
-            c = (c >> 0x7) | (c << 0x1);
-            c = ~c;
-            c -= 0x4f;
-            c ^= m;
-            s[m] = c;
-        }
-        signStr = std::string((char *) s);
-    } else {
-        //075aa687f44a253d6abb9994d466c487,使用混淆:https://zerosum0x0.blogspot.com/2017/08/obfuscatedencrypted-cc-online-string.html
-        unsigned char s[] = {
-                0x1f, 0x1d, 0x15, 0x79, 0x75, 0x7, 0x37, 0x5,
-                0x5b, 0xf2, 0xee, 0x59, 0xf2, 0xec, 0x11, 0x3b,
-                0xda, 0x41, 0x3b, 0x37, 0x5, 0x1, 0x0, 0xba,
-                0x17, 0xb2, 0xb2, 0xae, 0x39, 0xa2, 0xd6, 0xa8,
-                0xbe};
-
-        for (unsigned int m = 0; m < sizeof(s); ++m) {
-            unsigned char c = s[m];
-            c += m;
-            c = -c;
-            c += m;
-            c = (c >> 0x2) | (c << 0x6);
-            c = ~c;
-            c += m;
-            c = (c >> 0x7) | (c << 0x1);
-            c += 0x29;
-            c = ~c;
-            c += 0xed;
-            c = -c;
-            c += 0xc8;
-            c ^= 0x9;
-            c += 0x77;
-            c ^= 0xa4;
-            s[m] = c;
-        }
-        signStr = std::string((char *) s);
+    for (unsigned int m = 0; m < sizeof(s); ++m) {
+        unsigned char c = s[m];
+        c += m;
+        c = -c;
+        c += m;
+        c = (c >> 0x2) | (c << 0x6);
+        c = ~c;
+        c += m;
+        c = (c >> 0x7) | (c << 0x1);
+        c += 0x29;
+        c = ~c;
+        c += 0xed;
+        c = -c;
+        c += 0xc8;
+        c ^= 0x9;
+        c += 0x77;
+        c ^= 0xa4;
+        s[m] = c;
     }
+    std::string signStr = std::string((char *) s);
 
     if (signStr != appSignatureMd5) {
         int exitCode = EXIT_CODE_UNAUTH_SIGNATURE;
