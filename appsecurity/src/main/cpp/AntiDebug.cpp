@@ -47,26 +47,25 @@ static void *thread_function(void *argv) {
     char file_name[20] = {'\0'};
     sprintf(file_name, "/proc/%d/status", pid);
     char linestr[256];
-    int i = 0, traceid;
+    int traceid;
     FILE *fp;
     while (!g_stopLoop) {
-        i = 0;
         fp = fopen(file_name, "r");
         if (fp == nullptr) {
             break;
         }
         while (!feof(fp)) {
             fgets(linestr, 256, fp);
-            if (i == 5) {
+            char *tracerPid = strstr(linestr, "TracerPid");
+            if (tracerPid != nullptr) {
                 traceid = get_number_for_str(linestr);
                 if (traceid > 1000 && g_detectDebugCallback != nullptr) {
-                    //华为P9会主动给app附加一个进程，暂且认为小于1000的是系统的
                     LOGI("Detect traceId = %d", traceid);
+                    fclose(fp);
                     g_detectDebugCallback->onDetected(DETECTED_RESULT_PTRACE);
                 }
                 break;
             }
-            i++;
         }
         fclose(fp);
         sleep(5);
