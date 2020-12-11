@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.btn_test_accessibility).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT);
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ACCESSIBILITY_SERVICE);
         });
         findViewById(R.id.btn_test_emulator).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.EMULATOR_CHECK_UNIT);
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.EMULATOR);
         });
         findViewById(R.id.btn_test_root).setOnClickListener(v -> {
-            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ROOT_CHECK_UNIT);
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ROOT);
         });
         findViewById(R.id.btn_test_app_debug).setOnClickListener(v -> {
             AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.APP_DEBUG);

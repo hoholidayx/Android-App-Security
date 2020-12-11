@@ -53,9 +53,9 @@ public class AppSecurityManager {
             Log.i(Configuration.LOG_TAG, "App security manager init...");
         }
         List<String> checkUnitList = Arrays.asList(
-                CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT,
-                CheckUnitName.EMULATOR_CHECK_UNIT,
-                CheckUnitName.ROOT_CHECK_UNIT,
+                CheckUnitName.ACCESSIBILITY_SERVICE,
+                CheckUnitName.EMULATOR,
+                CheckUnitName.ROOT,
                 CheckUnitName.APP_DEBUG
         );
         final Context appContext = context.getApplicationContext();

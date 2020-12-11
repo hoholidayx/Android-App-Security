@@ -12,13 +12,13 @@ public class CheckUnitFactory {
     public static ICheckUnit getCheckUnit(@CheckUnitName String name) {
         ICheckUnit checkUnit = null;
         switch (name) {
-            case CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT:
+            case CheckUnitName.ACCESSIBILITY_SERVICE:
                 checkUnit = new AccessibilityServiceCheckUnit();
                 break;
-            case CheckUnitName.EMULATOR_CHECK_UNIT:
+            case CheckUnitName.EMULATOR:
                 checkUnit = new EmulatorCheckUnit();
                 break;
-            case CheckUnitName.ROOT_CHECK_UNIT:
+            case CheckUnitName.ROOT:
                 checkUnit = new RootCheckUnit();
                 break;
             case CheckUnitName.APP_DEBUG:

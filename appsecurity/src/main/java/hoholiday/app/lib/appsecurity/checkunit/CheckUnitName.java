@@ -6,19 +6,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @StringDef({
-        CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT,
-        CheckUnitName.EMULATOR_CHECK_UNIT,
-        CheckUnitName.ROOT_CHECK_UNIT,
+        CheckUnitName.ACCESSIBILITY_SERVICE,
+        CheckUnitName.EMULATOR,
+        CheckUnitName.ROOT,
         CheckUnitName.APP_DEBUG,
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface CheckUnitName {
 
-    String ACCESSIBILITY_SERVICE_CHECK_UNIT = "accessibility_service";
+    String ACCESSIBILITY_SERVICE = "accessibility_service";
 
-    String EMULATOR_CHECK_UNIT = "emulator";
+    String EMULATOR = "emulator";
 
-    String ROOT_CHECK_UNIT = "root";
+    String ROOT = "root";
 
     String APP_DEBUG = "app-debug";
 }
