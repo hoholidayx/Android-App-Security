@@ -37,6 +37,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="检测root" />
+
+            <Button
+                android:id="@+id/btn_test_app_debug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检测debug" />
         </GridLayout>
     </ScrollView>
 

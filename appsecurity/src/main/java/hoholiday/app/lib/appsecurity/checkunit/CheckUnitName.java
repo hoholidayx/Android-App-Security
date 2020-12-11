@@ -8,7 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 @StringDef({
         CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT,
         CheckUnitName.EMULATOR_CHECK_UNIT,
-        CheckUnitName.ROOT_CHECK_UNIT
+        CheckUnitName.ROOT_CHECK_UNIT,
+        CheckUnitName.APP_DEBUG,
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface CheckUnitName {
@@ -18,4 +19,6 @@ public @interface CheckUnitName {
     String EMULATOR_CHECK_UNIT = "emulator";
 
     String ROOT_CHECK_UNIT = "root";
+
+    String APP_DEBUG = "app-debug";
 }

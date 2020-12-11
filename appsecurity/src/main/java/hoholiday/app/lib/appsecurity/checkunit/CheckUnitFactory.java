@@ -21,6 +21,9 @@ public class CheckUnitFactory {
             case CheckUnitName.ROOT_CHECK_UNIT:
                 checkUnit = new RootCheckUnit();
                 break;
+            case CheckUnitName.APP_DEBUG:
+                checkUnit = new AppDebugCheck();
+                break;
             default:
                 if (Configuration.isLogEnable()) {
                     Log.e(Configuration.LOG_TAG, String.format("check [%s] unit not found!", name));

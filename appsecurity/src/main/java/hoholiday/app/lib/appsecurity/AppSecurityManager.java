@@ -55,7 +55,8 @@ public class AppSecurityManager {
         List<String> checkUnitList = Arrays.asList(
                 CheckUnitName.ACCESSIBILITY_SERVICE_CHECK_UNIT,
                 CheckUnitName.EMULATOR_CHECK_UNIT,
-                CheckUnitName.ROOT_CHECK_UNIT
+                CheckUnitName.ROOT_CHECK_UNIT,
+                CheckUnitName.APP_DEBUG
         );
         final Context appContext = context.getApplicationContext();
         AsyncTask.execute(() -> {

@@ -31,5 +31,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_test_root).setOnClickListener(v -> {
             AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.ROOT_CHECK_UNIT);
         });
+        findViewById(R.id.btn_test_app_debug).setOnClickListener(v -> {
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.APP_DEBUG);
+        });
     }
 }
