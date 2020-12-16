@@ -12,7 +12,7 @@ class AppDebugCheckUnit implements ICheckUnit {
 
     @Override
     public double check(@NonNull Context context) {
-        return isDebuggerConnected() &&
+        return isDebuggerConnected() ||
                 (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) > 1 ? 1 : 0;
     }
 
