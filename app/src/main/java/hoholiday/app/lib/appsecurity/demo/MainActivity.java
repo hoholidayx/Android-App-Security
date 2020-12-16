@@ -34,5 +34,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_test_app_debug).setOnClickListener(v -> {
             AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.APP_DEBUG);
         });
+        findViewById(R.id.btn_test_xposed).setOnClickListener(v -> {
+            AppSecurityManager.getInstance().unitCheck(getApplicationContext(), CheckUnitName.XPOSED);
+        });
     }
 }

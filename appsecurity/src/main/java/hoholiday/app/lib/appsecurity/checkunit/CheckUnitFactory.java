@@ -24,6 +24,9 @@ public class CheckUnitFactory {
             case CheckUnitName.APP_DEBUG:
                 checkUnit = new AppDebugCheckUnit();
                 break;
+            case CheckUnitName.XPOSED:
+                checkUnit = new XposedCheckUnit();
+                break;
             default:
                 if (Configuration.isLogEnable()) {
                     Log.e(Configuration.LOG_TAG, String.format("check [%s] unit not found!", name));

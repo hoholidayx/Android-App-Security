@@ -10,6 +10,7 @@ import java.lang.annotation.RetentionPolicy;
         CheckUnitName.EMULATOR,
         CheckUnitName.ROOT,
         CheckUnitName.APP_DEBUG,
+        CheckUnitName.XPOSED,
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface CheckUnitName {
@@ -21,4 +22,6 @@ public @interface CheckUnitName {
     String ROOT = "root";
 
     String APP_DEBUG = "app-debug";
+
+    String XPOSED = "xposed";
 }
