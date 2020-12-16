@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 /**
  * 检查是否处于Debug模式
  */
-class AppDebugCheck implements ICheckUnit {
+class AppDebugCheckUnit implements ICheckUnit {
 
     @Override
     public double check(@NonNull Context context) {

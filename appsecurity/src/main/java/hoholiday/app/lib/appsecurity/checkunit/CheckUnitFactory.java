@@ -22,7 +22,7 @@ public class CheckUnitFactory {
                 checkUnit = new RootCheckUnit();
                 break;
             case CheckUnitName.APP_DEBUG:
-                checkUnit = new AppDebugCheck();
+                checkUnit = new AppDebugCheckUnit();
                 break;
             default:
                 if (Configuration.isLogEnable()) {
