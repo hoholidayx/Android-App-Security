@@ -12,7 +12,15 @@ class AppDebugCheck implements ICheckUnit {
 
     @Override
     public double check(@NonNull Context context) {
-        return (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) > 1 ? 1 : 0;
+        return isDebuggerConnected() &&
+                (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) > 1 ? 1 : 0;
+    }
+
+    /**
+     * 检测是否连上调试器
+     */
+    public boolean isDebuggerConnected() {
+        return android.os.Debug.isDebuggerConnected();
     }
 
     @NonNull
