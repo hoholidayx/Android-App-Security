@@ -11,6 +11,7 @@ import java.lang.annotation.RetentionPolicy;
         CheckUnitName.ROOT,
         CheckUnitName.APP_DEBUG,
         CheckUnitName.XPOSED,
+
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface CheckUnitName {
@@ -24,4 +25,6 @@ public @interface CheckUnitName {
     String APP_DEBUG = "app-debug";
 
     String XPOSED = "xposed";
+
+    String VIRTUAL_APK = "virtual-apk";
 }

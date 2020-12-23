@@ -16,6 +16,7 @@ import hoholiday.app.lib.appsecurity.exception.AppSecurityException;
 public class AppSecurityManager {
 
     static {
+        // TODO: 2020/12/23 考虑移动到单独unitu
         System.loadLibrary("app-security");
     }
 
@@ -23,6 +24,7 @@ public class AppSecurityManager {
 
 
     private AppSecurityManager() {
+        //1.签名检测；2.调试检测
         JNI.nativeInit();
     }
 
@@ -56,7 +58,8 @@ public class AppSecurityManager {
                 CheckUnitName.ACCESSIBILITY_SERVICE,
                 CheckUnitName.EMULATOR,
                 CheckUnitName.ROOT,
-                CheckUnitName.APP_DEBUG
+                CheckUnitName.APP_DEBUG,
+                CheckUnitName.VIRTUAL_APK
         );
         final Context appContext = context.getApplicationContext();
         AsyncTask.execute(() -> {

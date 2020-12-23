@@ -27,6 +27,9 @@ public class CheckUnitFactory {
             case CheckUnitName.XPOSED:
                 checkUnit = new XposedCheckUnit();
                 break;
+            case CheckUnitName.VIRTUAL_APK:
+                checkUnit = new VirtualApkCheckUnit();
+                break;
             default:
                 if (Configuration.isLogEnable()) {
                     Log.e(Configuration.LOG_TAG, String.format("check [%s] unit not found!", name));
